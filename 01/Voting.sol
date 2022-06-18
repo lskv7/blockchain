@@ -28,7 +28,7 @@ contract Voting is Ownable {
 
     uint public winningProposalId;
 
-    Proposal[] proposals;
+    Proposal[] public proposals;
 
     WorkflowStatus status;
 
@@ -45,7 +45,7 @@ contract Voting is Ownable {
     }
 
     modifier isStatusIn(uint _status) {
-        require(_status==uint(status), "Not possible in this current status");
+        require(_status == uint(status), "Not possible in this current status");
         _;
     }
 
@@ -55,12 +55,12 @@ contract Voting is Ownable {
     }
 
     /// @dev get all proposals
-    function getProposals() external view isWhiteListed returns(Proposal[] memory){
+    function getProposals() external view isWhiteListed returns (Proposal[] memory){
         return proposals;
     }
 
     /// @dev get current status
-    function getStatus() external view isWhiteListed returns(WorkflowStatus){
+    function getStatus() external view isWhiteListed returns (WorkflowStatus){
         return status;
     }
 
@@ -72,7 +72,7 @@ contract Voting is Ownable {
     }
 
     /// @dev start proposal's registration phase
-    function startProposalsRegistration() external onlyOwner isStatusIn(0){
+    function startProposalsRegistration() external onlyOwner isStatusIn(0) {
         status = WorkflowStatus.ProposalsRegistrationStarted;
         emit WorkflowStatusChange(WorkflowStatus.RegisteringVoters, status);
     }
@@ -84,39 +84,41 @@ contract Voting is Ownable {
     }
 
     /// @dev add proposal
-    function addProposal(string memory _description) external isWhiteListed isStatusIn(1){
+    function addProposal(string memory _description) external isWhiteListed isStatusIn(1) {
         Proposal memory proposal;
         proposal.description = _description;
         proposals.push(proposal);
-        emit ProposalRegistered(proposals.length-1);
+        emit ProposalRegistered(proposals.length - 1);
     }
 
     /// @dev start voting phase
-    function startVotingSession() external onlyOwner isStatusIn(2){
+    function startVotingSession() external onlyOwner isStatusIn(2) {
         status = WorkflowStatus.VotingSessionStarted;
         emit WorkflowStatusChange(WorkflowStatus.ProposalsRegistrationStarted, status);
     }
 
     /// @dev add vote to the specified proposal
-    function addVote(uint _proposalId) external isWhiteListed isStatusIn(3){
+    function addVote(uint _proposalId) external isWhiteListed isStatusIn(3) {
         require(!voters[msg.sender].hasVoted, "user has already voted");
         voters[msg.sender].hasVoted = true;
         voters[msg.sender].votedProposalId = _proposalId;
         proposals[_proposalId].voteCount++;
-        emit Voted (msg.sender, _proposalId);
+        emit Voted(msg.sender, _proposalId);
     }
 
     /// @dev end voting phase
-    function endVotingSession() external onlyOwner isStatusIn(3){
+    function endVotingSession() external onlyOwner isStatusIn(3) {
         status = WorkflowStatus.VotingSessionEnded;
         emit WorkflowStatusChange(WorkflowStatus.VotingSessionStarted, status);
     }
 
-    /// @dev calculate winning proposal
-    function setWinningProposal() external onlyOwner isStatusIn(4){
+    /* @dev calculate winning proposal
+    *
+    */
+    function setWinningProposal() external onlyOwner isStatusIn(4) {
         uint _winningProposalId;
-        for (uint p = 0; p < proposals.length; p++){
-            if (proposals[p].voteCount > proposals[_winningProposalId].voteCount){
+        for (uint p = 0; p < proposals.length; p++) {
+            if (proposals[p].voteCount > proposals[_winningProposalId].voteCount) {
                 _winningProposalId = p;
             }
         }
