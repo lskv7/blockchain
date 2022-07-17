@@ -14,11 +14,11 @@
 }
 
 #App .container {
-  width: 40%;
-  min-width: 60rem;
+  width: 30%;
+  min-width: 40rem;
   max-width: 75rem;
   height: 100%;
-  margin-top:40px;
+  margin-top:300px;
 }
 
 code {
