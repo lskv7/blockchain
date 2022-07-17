@@ -3,9 +3,7 @@ function Welcome() {
     <div className="welcome">
       <h1>Welcome to the Voting app</h1>
       <p>
-        This is everything you need to start using Truffle to write,
-        compile, test, and deploy smart contracts, and interact with
-        them from a React app.
+        This is the dapp for the voting contract.
       </p>
     </div>
   );
