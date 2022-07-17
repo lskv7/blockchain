@@ -18,6 +18,7 @@
   min-width: 60rem;
   max-width: 75rem;
   height: 100%;
+  margin-top:40px;
 }
 
 code {
@@ -141,3 +142,4 @@ hr {
   display: inline-block;
   margin: 2rem 1rem 0 0;
 }
+

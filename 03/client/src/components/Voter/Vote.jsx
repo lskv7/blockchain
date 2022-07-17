@@ -1,7 +1,8 @@
 import {useEffect, useState} from "react";
 import useEth from "../../contexts/EthContext/useEth";
+import Title from "../Title";
 
-function Add() {
+function Vote() {
     const {state: {contract, accounts}} = useEth();
     const [proposals, setProposals] = useState([])
 
@@ -32,7 +33,10 @@ function Add() {
         await contract.methods.setVote(proposalId).send({from: accounts[0]});
     }
 
-    return (<><select onChange={(value) => setProposalId(value)}>
+    return (<>
+        <Title title={"Vote"}/>
+
+        <select onChange={(value) => setProposalId(value)}>
         {proposals.map((value, index) => {
             return <option key={value.returnValues.proposalId}>{value.returnValues.proposalId}</option>
         })}
@@ -41,4 +45,4 @@ function Add() {
     </>);
 }
 
-export default Add;
+export default Vote;

@@ -1,9 +1,7 @@
+import useEth from "./useEth";
 import {useEffect, useState} from "react";
-import useEth from "../../contexts/EthContext/useEth";
-import HandleWorkflow from "./HandleWorkflow";
-import Title from "../Demo/Title";
 
-function Workflow() {
+export const useOwner = () => {
     const [isOwner, setIsOwner] = useState(false);
     const {state: {contract, accounts}} = useEth();
 
@@ -18,13 +16,5 @@ function Workflow() {
 
     }, [contract, accounts]);
 
-    return (
-        <>
-            <Title title={"Workflow"}/>
-            {!isOwner ? "You don't have access to this resource" :
-                <HandleWorkflow/>}
-        </>
-    );
-}
-
-export default Workflow;
+    return isOwner;
+};
