@@ -48,7 +48,7 @@ contract Voting is Ownable {
 
 
     /// @dev get voter by address
-    /// @param _id voter's address
+    /// @param _addr voter's address
     function getVoter(address _addr) external onlyVoters view returns (Voter memory) {
         return voters[_addr];
     }
