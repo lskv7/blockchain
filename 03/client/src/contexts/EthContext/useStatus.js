@@ -8,6 +8,7 @@ export const useStatus = () => {
     useEffect(() => {
         const _init = async () => {
             setStatus(await contract.methods.workflowStatus().call());
+            contract.events.WorkflowStatusChange({  fromBlock: 0 }).on('data', event => setStatus(event.returnValues.newStatus))
         }
         if (contract) {
             _init()

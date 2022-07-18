@@ -19,7 +19,6 @@ function Winner() {
         _init();
 
     }, [contract]);
-    console.log(status == 5)
 
     return (<>
         {status == 5 && <Alert message={`The most voted proposal is ${winner}`} type="success"/>}

@@ -3,7 +3,8 @@
 pragma solidity 0.8.14;
 import "../node_modules/@openzeppelin/contracts/access/Ownable.sol";
 
-
+/// @title Voting contract
+/// @author lskv7
 contract Voting is Ownable {
 
     uint public winningProposalID;
@@ -47,11 +48,13 @@ contract Voting is Ownable {
 
 
     /// @dev get voter by address
+    /// @param _id voter's address
     function getVoter(address _addr) external onlyVoters view returns (Voter memory) {
         return voters[_addr];
     }
 
     /// @dev get proposal by the id
+    /// @param _id proposal's id
     function getOneProposal(uint _id) external onlyVoters view returns (Proposal memory) {
         return proposalsArray[_id];
     }
@@ -60,6 +63,7 @@ contract Voting is Ownable {
     // ::::::::::::: REGISTRATION ::::::::::::: // 
 
     /// @dev add a voter by its address to the mapping and emit event
+    /// @param _addr voter's address
     function addVoter(address _addr) external onlyOwner {
         require(workflowStatus == WorkflowStatus.RegisteringVoters, 'Voters registration is not open yet');
         require(voters[_addr].isRegistered != true, 'Already registered');
@@ -72,6 +76,7 @@ contract Voting is Ownable {
     // ::::::::::::: PROPOSAL ::::::::::::: // 
 
     /// @dev add proposal if voter and emit event
+    /// @param _desc proposal's description
     function addProposal(string memory _desc) external onlyVoters {
         require(workflowStatus == WorkflowStatus.ProposalsRegistrationStarted, 'Proposals are not allowed yet');
         require(keccak256(abi.encode(_desc)) != keccak256(abi.encode("")), 'Vous ne pouvez pas ne rien proposer'); // facultatif
@@ -85,6 +90,7 @@ contract Voting is Ownable {
 
     // ::::::::::::: VOTE ::::::::::::: //
     /// @dev add vote for the proposal with id _id
+    /// @param _id proposal's id
     function setVote( uint _id) external onlyVoters {
         require(workflowStatus == WorkflowStatus.VotingSessionStarted, 'Voting session havent started yet');
         require(voters[msg.sender].hasVoted != true, 'You have already voted');

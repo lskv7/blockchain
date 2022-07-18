@@ -7,10 +7,6 @@ function WhiteList() {
     const [newVoter, setNewVoter] = useState()
     const [isModalVisible, setIsModalVisible] = useState(false);
 
-    useEffect(() => {
-
-    }, []);
-
     const add = async () => {
         if (newVoter === "") {
             alert("Please enter an address for the voter.");

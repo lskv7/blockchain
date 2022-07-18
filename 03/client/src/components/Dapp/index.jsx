@@ -13,13 +13,11 @@ function Dapp() {
     return (
         <>
             <div style={{display: "flex", justifyContent: "end"}}>
-
                 {(isVoter && status == 1) && <Propose/>}
                 {(isOwner && status == 0) && (<WhiteList/>)}
                 <Workflow/>
             </div>
             <Proposals/>
-
         </>
     );
 }

@@ -7,19 +7,20 @@ export const useVoter = () => {
 
     useEffect(() => {
         const init = async () => {
-            let options = {
-                fromBlock: 0,                  //Number || "earliest" || "pending" || "latest"
-                toBlock: 'latest'
-            };
             if (contract && accounts) {
-                const events = await contract.getPastEvents('VoterRegistered', options)
-                const voters = events.map(e => e.returnValues.voterAddress)
-                setIsVoter(voters.includes(accounts[0]))
+                await checkIsVoter();
+                contract.events.VoterRegistered({fromBlock: 0}).on('data', async e => await checkIsVoter())
             }
         }
         init();
 
     }, [contract, accounts]);
+
+    const checkIsVoter = async () => {
+        const events = await contract.getPastEvents('VoterRegistered', {fromBlock: 0})
+        const voters = events.map(e => e.returnValues.voterAddress)
+        setIsVoter(voters.includes(accounts[0]))
+    }
 
     return isVoter;
 };

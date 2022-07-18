@@ -8,6 +8,7 @@ function WorkFlow() {
     const isOwner = useOwner();
     const status = useStatus();
 
+
     const startProposal = async () => {
         await contract.methods.startProposalsRegistering().send({from: accounts[0]});
     }
@@ -26,11 +27,16 @@ function WorkFlow() {
     }
 
     return (<>
-        {status == 0 && isOwner && <Button type="primary" danger onClick={async () => await startProposal()}>Start proposal registration</Button>}
-        {status == 1 && isOwner && <Button type="primary" danger onClick={async () => await endProposal()}>End proposal registration</Button>}
-        {status == 2 && isOwner && <Button type="primary" danger onClick={async () => await startVoting()}>Start voting session</Button>}
-        {status == 3 && isOwner && <Button type="primary" danger onClick={async () => await endVoting()}>End voting session</Button>}
-        {(status == 4 && isOwner) && <Button type="primary" danger onClick={async () => await tally()}>Tally</Button>}
+        {status == 0 && isOwner &&
+            <Button type="primary" danger onClick={async () => await startProposal()}>Start proposal
+                registration</Button>}
+        {status == 1 && isOwner &&
+            <Button type="primary" danger onClick={async () => await endProposal()}>End proposal registration</Button>}
+        {status == 2 && isOwner &&
+            <Button type="primary" danger onClick={async () => await startVoting()}>Start voting session</Button>}
+        {status == 3 && isOwner &&
+            <Button type="primary" danger onClick={async () => await endVoting()}>End voting session</Button>}
+        {status == 4 && isOwner && <Button type="primary" danger onClick={async () => await tally()}>Tally</Button>}
 
     </>);
 }

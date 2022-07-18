@@ -9,7 +9,6 @@ function Vote({proposalId}) {
     const status = useStatus();
 
     const add = async () => {
-        console.log(proposalId)
         if (!proposalId) {
             alert("Please enter a proposal for the vote.");
             return;

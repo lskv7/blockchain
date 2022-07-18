@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import useEth from "../../../contexts/EthContext/useEth";
 import {Button, Modal} from "antd";
 
@@ -6,10 +6,6 @@ function Propose() {
     const {state: {contract, accounts}} = useEth();
     const [newProposal, setNewProposal] = useState();
     const [isModalVisible, setIsModalVisible] = useState(false);
-
-    useEffect(() => {
-
-    }, []);
 
     const add = async () => {
         if (newProposal === "") {

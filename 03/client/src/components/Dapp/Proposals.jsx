@@ -29,6 +29,7 @@ function Proposals() {
         }
         _init();
 
+
     }, [contract]);
 
     return (<>
