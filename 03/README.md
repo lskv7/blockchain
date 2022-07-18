@@ -6,7 +6,9 @@ This dapp has been deployed [here](https://voting-4854d.web.app/) with the contr
 
 ## Demo
 
-<video src='https://www.youtube.com/watch?v=HirblOY27U4' width=180 />
+![Demo video](dapp.gif)
+
+
 
 ## Installation
 1. Deploy the contract:
