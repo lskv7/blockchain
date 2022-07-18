@@ -13,7 +13,6 @@ export const useOwner = () => {
             }
         }
         init();
-
     }, [contract, accounts]);
 
     return isOwner;
