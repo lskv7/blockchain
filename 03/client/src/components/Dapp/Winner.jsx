@@ -2,6 +2,7 @@ import useEth from "../../contexts/EthContext/useEth";
 import {useStatus} from "../../contexts/EthContext/useStatus";
 import {useEffect, useState} from "react";
 import Title from "../Title";
+import {Alert} from "antd";
 
 function Winner() {
     const {state: {contract}} = useEth();
@@ -10,9 +11,9 @@ function Winner() {
 
     useEffect(() => {
         const _init = async () => {
-            if (contract){
-            const _winner = await contract.methods.winningProposalID().call();
-            setWinner(_winner);
+            if (contract) {
+                const _winner = await contract.methods.winningProposalID().call();
+                setWinner(_winner);
             }
         }
         _init();
@@ -21,8 +22,7 @@ function Winner() {
     console.log(status == 5)
 
     return (<>
-        <Title title={"Winning Proposal"}/>
-        <span> {status == 5 ? `The most voted proposal is ${winner}` : "There is no winning proposal at the moment"} </span>
+        {status == 5 && <Alert message={`The most voted proposal is ${winner}`} type="success"/>}
     </>);
 }
 

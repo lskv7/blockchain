@@ -7,7 +7,7 @@ import "../node_modules/@openzeppelin/contracts/access/Ownable.sol";
 contract Voting is Ownable {
 
     uint public winningProposalID;
-    
+
     struct Voter {
         bool isRegistered;
         bool hasVoted;
@@ -33,7 +33,7 @@ contract Voting is Ownable {
     mapping (address => Voter) voters;
 
 
-    event VoterRegistered(address voterAddress); 
+    event VoterRegistered(address voterAddress);
     event WorkflowStatusChange(WorkflowStatus previousStatus, WorkflowStatus newStatus);
     event ProposalRegistered(uint proposalId);
     event Voted (address voter, uint proposalId);
@@ -42,7 +42,7 @@ contract Voting is Ownable {
         require(voters[msg.sender].isRegistered, "You're not a voter");
         _;
     }
-    
+
     // on peut faire un modifier pour les états
 
     // ::::::::::::: GETTERS ::::::::::::: //
@@ -50,22 +50,22 @@ contract Voting is Ownable {
     function getVoter(address _addr) external onlyVoters view returns (Voter memory) {
         return voters[_addr];
     }
-    
+
     function getOneProposal(uint _id) external onlyVoters view returns (Proposal memory) {
         return proposalsArray[_id];
     }
 
- 
+
     // ::::::::::::: REGISTRATION ::::::::::::: // 
 
     function addVoter(address _addr) external onlyOwner {
         require(workflowStatus == WorkflowStatus.RegisteringVoters, 'Voters registration is not open yet');
         require(voters[_addr].isRegistered != true, 'Already registered');
-    
+
         voters[_addr].isRegistered = true;
         emit VoterRegistered(_addr);
     }
- 
+
 
     // ::::::::::::: PROPOSAL ::::::::::::: // 
 
@@ -131,7 +131,7 @@ contract Voting is Ownable {
           }
        }
        winningProposalID = _winningProposalId;
-       
+
        workflowStatus = WorkflowStatus.VotesTallied;
        emit WorkflowStatusChange(WorkflowStatus.VotingSessionEnded, WorkflowStatus.VotesTallied);
     }
